@@ -1,11 +1,15 @@
-import { useState, useRef, FormEvent, useLayoutEffect, RefObject } from 'react';
+import { useLayoutEffect, RefObject } from 'react';
 
 type useClosePopupT = {
+  
+  openPopup: boolean
   onClose: () => void
   objectRef: RefObject<HTMLElement>
 }
 
-export function useClosePopup({ onClose, objectRef}: useClosePopupT) {
+export function useClosePopup({openPopup, onClose, objectRef}: useClosePopupT) {
+  if (!openPopup) {false}
+
   useLayoutEffect(() => {
 
     function clickWhithoutBlock(evt: MouseEvent) {

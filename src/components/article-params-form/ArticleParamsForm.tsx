@@ -54,7 +54,8 @@ export const ArticleParamsForm = ({prop, onSubmit}: ArticleParamsFormT) => {
 
 	useClosePopup({
 		onClose: () => setOpenPopup(false), 
-		objectRef: formRef
+		objectRef: formRef,
+		openPopup
 	})
 
 	return (
