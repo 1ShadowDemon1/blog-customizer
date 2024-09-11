@@ -35,9 +35,9 @@ export const ArticleParamsForm = ({prop, onSubmit}: ArticleParamsFormT) => {
 	const formRef = useRef<HTMLFormElement>(null);
 
 	const activeSubmit = (evt: FormEvent<HTMLFormElement>) => {
-		evt.preventDefault();
-		onSubmit(formState);
-		setOpenPopup(false);
+		evt.preventDefault()
+		onSubmit(formState)
+		setOpenPopup(false)
 	}
 
 	const selectChange = (key: keyof TypeDefaultStyle) => (value: OptionType) => {
