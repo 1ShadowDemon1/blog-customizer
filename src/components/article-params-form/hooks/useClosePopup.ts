@@ -1,34 +1,34 @@
-// import { useLayoutEffect, RefObject } from 'react';
+import { useLayoutEffect, RefObject } from 'react';
 
-// type useClosePopupT = {
+type useClosePopupT = {
   
-//   openPopup: boolean
-//   onClose: () => void
-//   objectRef: RefObject<HTMLElement>
-// }
+  openPopup: boolean
+  onClose: () => void
+  objectRef: RefObject<HTMLElement>
+}
 
-// export function useClosePopup({openPopup, onClose, objectRef}: useClosePopupT) {
-//   if (!openPopup) {false}
+export function useClosePopup({openPopup, onClose, objectRef}: useClosePopupT) {
+  if (!openPopup) {false}
 
-//   useLayoutEffect(() => {
+  useLayoutEffect(() => {
 
-//     function clickWhithoutBlock(evt: MouseEvent) {
-//       const {target} = evt
-//       const clickWhithoutBlockModel = target instanceof Node && objectRef.current && !objectRef.current.contains(target)
+    function clickWhithoutBlock(evt: MouseEvent) {
+      const {target} = evt
+      const clickWhithoutBlockModel = target instanceof Node && objectRef.current && !objectRef.current.contains(target)
 
-//       if(clickWhithoutBlockModel) {onClose()}
-//     }
+      if(clickWhithoutBlockModel) {onClose()}
+    }
 
-//     function escape (evt:KeyboardEvent) {
-//       if(evt.key === "Escape") {onClose()}
-//     }
+    function escape (evt:KeyboardEvent) {
+      if(evt.key === "Escape") {onClose()}
+    }
     
-//     document.addEventListener('keydown', escape)
-//     document.addEventListener('mousedown', clickWhithoutBlock)
+    document.addEventListener('keydown', escape)
+    document.addEventListener('mousedown', clickWhithoutBlock)
 
-//     return() => {
-//       document.removeEventListener('keydown', escape)
-//       document.removeEventListener('mousedown', clickWhithoutBlock)
-//     }
-//   })
-// }
+    return() => {
+      document.removeEventListener('keydown', escape)
+      document.removeEventListener('mousedown', clickWhithoutBlock)
+    }
+  })
+}
