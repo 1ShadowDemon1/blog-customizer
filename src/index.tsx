@@ -1,9 +1,9 @@
 import { createRoot } from 'react-dom/client';
-import { StrictMode, CSSProperties, useState } from 'react';
+import { StrictMode, CSSProperties } from 'react';
 import clsx from 'clsx';
 
 import { Article } from './components/article/Article';
-import { ArticleParamsForm, defaultStyle, TypeDefaultStyle } from './components/article-params-form/ArticleParamsForm';
+import { ArticleParamsForm } from './components/article-params-form/ArticleParamsForm';
 import { defaultArticleState } from './constants/articleProps';
 
 import './styles/index.scss';
@@ -13,21 +13,19 @@ const domNode = document.getElementById('root') as HTMLDivElement;
 const root = createRoot(domNode);
 
 const App = () => {
-	const [articleParams, setArticleParams] = useState<TypeDefaultStyle>(defaultStyle)
-	const onActiveForm = (prop: TypeDefaultStyle) => {setArticleParams(prop)}
 	return (
 		<div
 			className={clsx(styles.main)}
 			style={
 				{
-					'--font-family': articleParams.fontFamilyOption.value,
-					'--font-size': articleParams.fontSizeOption.value,
-					'--font-color': articleParams.fontColor.value,
-					'--container-width': articleParams.contentWidth.value,
-					'--bg-color': articleParams.backgroundColor.value,
+					'--font-family': defaultArticleState.fontFamilyOption.value,
+					'--font-size': defaultArticleState.fontSizeOption.value,
+					'--font-color': defaultArticleState.fontColor.value,
+					'--container-width': defaultArticleState.contentWidth.value,
+					'--bg-color': defaultArticleState.backgroundColor.value,
 				} as CSSProperties
 			}>
-			<ArticleParamsForm prop={articleParams} onSubmit={onActiveForm}/>
+			<ArticleParamsForm />
 			<Article />
 		</div>
 	);
