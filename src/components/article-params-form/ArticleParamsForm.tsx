@@ -3,33 +3,23 @@ import { Button } from 'components/button';
 import clsx from 'clsx';
 import styles from './ArticleParamsForm.module.scss';
 import { useState, useRef, FormEvent } from 'react';
-import {	fontFamilyOptions, fontColors, backgroundColors, contentWidthArr, fontSizeOptions, OptionType} from 'src/constants/articleProps'
+import {	fontFamilyOptions, fontColors, backgroundColors, contentWidthArr, fontSizeOptions, OptionType, defaultArticleState, ArticleStateType} from 'src/constants/articleProps'
 import { Select } from '../select';
 import { RadioGroup } from '../radio-group';
 import { Separator } from '../separator';
 import { useClosePopup } from './hooks/useClosePopup';
-
-
-export const defaultStyle = {
-	fontFamilyOption: fontFamilyOptions[0],
-	fontColor: fontColors[0],
-	backgroundColor: backgroundColors[0],
-	contentWidth: contentWidthArr[0],
-	fontSizeOption: fontSizeOptions[0],
-}
-
-export type TypeDefaultStyle = typeof defaultStyle
+import { Text } from 'components/text';
 
 export type ArticleParamsFormT = {
-	prop: TypeDefaultStyle;
-	onSubmit: (prop: TypeDefaultStyle) => void
+	prop: ArticleStateType;
+	onSubmit: (prop: ArticleStateType) => void
 }
 
 export const ArticleParamsForm = ({prop, onSubmit}: ArticleParamsFormT) => {
 
 	//Открыть\закрыть боковую панель
 	const [openPopup, setOpenPopup] = useState<boolean>(false)
-	const [formState, setFormState] = useState<TypeDefaultStyle>(prop)
+	const [formState, setFormState] = useState<ArticleStateType>(prop)
 
 	//Форма вариации статьи
 	const formRef = useRef<HTMLFormElement>(null);
@@ -40,7 +30,7 @@ export const ArticleParamsForm = ({prop, onSubmit}: ArticleParamsFormT) => {
 		setOpenPopup(false)
 	}
 
-	const selectChange = (key: keyof TypeDefaultStyle) => (value: OptionType) => {
+	const selectChange = (key: keyof ArticleStateType) => (value: OptionType) => {
 		setFormState((preventState) => ({
 			...preventState,
 			[key]: value
@@ -48,8 +38,8 @@ export const ArticleParamsForm = ({prop, onSubmit}: ArticleParamsFormT) => {
 	}
 
 	const buttonReset = () => {
-		setFormState(defaultStyle)
-		onSubmit(defaultStyle)
+		setFormState(defaultArticleState)
+		onSubmit(defaultArticleState)
 	}
 
 	useClosePopup({
@@ -64,6 +54,7 @@ export const ArticleParamsForm = ({prop, onSubmit}: ArticleParamsFormT) => {
 			<aside className={clsx(styles.container, openPopup && styles.container_open)}>
 				<form className={styles.form} ref={formRef} onSubmit={activeSubmit}>
 					<div className={styles.contentSize}>
+						<Text size={31} weight={800} uppercase={true}>Задайте параметры</Text>
 						<Select selected={formState.fontFamilyOption} options={fontFamilyOptions} onChange={selectChange('fontFamilyOption')} title={'ШРИФТ'}/>
 						<RadioGroup name={'fontSize'} options={fontSizeOptions} selected={formState.fontSizeOption} onChange={selectChange('fontSizeOption')} title={'РАЗМЕР ШРИФТА'}/>
 						<Select selected={formState.fontColor} options={fontColors} onChange={selectChange('fontColor')} title={'ЦВЕТ ШРИФТА'}/>

@@ -24,11 +24,11 @@ export function useClosePopup({openPopup, onClose, objectRef}: useClosePopupT) {
     }
     
     document.addEventListener('keydown', escape)
-    document.addEventListener('mousedown', clickWhithoutBlock)
+    //document.addEventListener('mousedown', clickWhithoutBlock)
 
     return() => {
       document.removeEventListener('keydown', escape)
-      document.removeEventListener('mousedown', clickWhithoutBlock)
+      //document.removeEventListener('mousedown', clickWhithoutBlock)
     }
   })
 }
