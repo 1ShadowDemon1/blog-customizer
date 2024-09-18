@@ -6,9 +6,9 @@ import styles from './styles/index.module.scss';
 
 export const App = () => {
 	const [articleParams, setArticleParams] = useState<ArticleStateType>(defaultArticleState)
-	const onActiveForm = (prop: ArticleStateType) => {setArticleParams(prop)}
+
 	return (
-		<div
+		<main
 			className={styles.main}
 			style={
 				{
@@ -19,8 +19,8 @@ export const App = () => {
 					'--bg-color': articleParams.backgroundColor.value,
 				} as CSSProperties
 			}>
-			<ArticleParamsForm prop={articleParams} onSubmit={onActiveForm}/>
+			<ArticleParamsForm parameters={articleParams} onSubmit={setArticleParams}/>
 			<Article />
-		</div>
+		</main>
 	);
 };

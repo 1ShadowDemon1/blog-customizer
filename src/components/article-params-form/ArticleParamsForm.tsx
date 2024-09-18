@@ -11,59 +11,59 @@ import { useClosePopup } from './hooks/useClosePopup';
 import { Text } from 'components/text';
 
 export type ArticleParamsFormT = {
-	prop: ArticleStateType;
-	onSubmit: (prop: ArticleStateType) => void
+	parameters: ArticleStateType;
+	onSubmit: (parameters: ArticleStateType) => void
 }
-
-export const ArticleParamsForm = ({prop, onSubmit}: ArticleParamsFormT) => {
+ 
+export const ArticleParamsForm = ({parameters, onSubmit}: ArticleParamsFormT) => {
 
 	//Открыть\закрыть боковую панель
-	const [openPopup, setOpenPopup] = useState<boolean>(false)
-	const [formState, setFormState] = useState<ArticleStateType>(prop)
+	const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false)
+	const [formState, setFormState] = useState<ArticleStateType>(parameters)
 
 	//Форма вариации статьи
 	const formRef = useRef<HTMLFormElement>(null);
 
-	const activeSubmit = (evt: FormEvent<HTMLFormElement>) => {
+	const handleMenuSubmit = (evt: FormEvent<HTMLFormElement>) => {
 		evt.preventDefault()
 		onSubmit(formState)
-		setOpenPopup(false)
+		setIsMenuOpen(false)
 	}
 
-	const selectChange = (key: keyof ArticleStateType) => (value: OptionType) => {
+	const handleSelectChange = (key: keyof ArticleStateType) => (value: OptionType) => {
 		setFormState((preventState) => ({
 			...preventState,
 			[key]: value
 		}))
 	}
 
-	const buttonReset = () => {
+	const handleReset = () => {
 		setFormState(defaultArticleState)
 		onSubmit(defaultArticleState)
 	}
 
 	useClosePopup({
-		onClose: () => setOpenPopup(false), 
+		onClose: () => setIsMenuOpen(false), 
 		objectRef: formRef,
-		openPopup
+		isMenuOpen
 	})
 
 	return (
 		<>
-			<ArrowButton openPopup={openPopup} onClick={() => setOpenPopup(!openPopup)}/>
-			<aside className={clsx(styles.container, openPopup && styles.container_open)}>
-				<form className={styles.form} ref={formRef} onSubmit={activeSubmit}>
+			<ArrowButton isMenuOpen={isMenuOpen} onClick={() => setIsMenuOpen(!isMenuOpen)}/>
+			<aside className={clsx(styles.container, isMenuOpen && styles.container_open)}>
+				<form className={styles.form} ref={formRef} onSubmit={handleMenuSubmit}>
 					<div className={styles.contentSize}>
-						<Text size={31} weight={800} uppercase={true}>Задайте параметры</Text>
-						<Select selected={formState.fontFamilyOption} options={fontFamilyOptions} onChange={selectChange('fontFamilyOption')} title={'ШРИФТ'}/>
-						<RadioGroup name={'fontSize'} options={fontSizeOptions} selected={formState.fontSizeOption} onChange={selectChange('fontSizeOption')} title={'РАЗМЕР ШРИФТА'}/>
-						<Select selected={formState.fontColor} options={fontColors} onChange={selectChange('fontColor')} title={'ЦВЕТ ШРИФТА'}/>
+						<Text size={31} weight={800} uppercase={true} as={"h2"}>Задайте параметры</Text>
+						<Select selected={formState.fontFamilyOption} options={fontFamilyOptions} onChange={handleSelectChange('fontFamilyOption')} title={'ШРИФТ'}/>
+						<RadioGroup name={'fontSize'} options={fontSizeOptions} selected={formState.fontSizeOption} onChange={handleSelectChange('fontSizeOption')} title={'РАЗМЕР ШРИФТА'}/>
+						<Select selected={formState.fontColor} options={fontColors} onChange={handleSelectChange('fontColor')} title={'ЦВЕТ ШРИФТА'}/>
 						<Separator />
-						<Select selected={formState.backgroundColor} options={backgroundColors} onChange={selectChange("backgroundColor")} title={'ЦВЕТ ФОНА'}/>
-						<Select selected={formState.contentWidth} options={contentWidthArr} onChange={selectChange("contentWidth")} title={'ШИРИНА КОНТЕНТА'}/>
+						<Select selected={formState.backgroundColor} options={backgroundColors} onChange={handleSelectChange("backgroundColor")} title={'ЦВЕТ ФОНА'}/>
+						<Select selected={formState.contentWidth} options={contentWidthArr} onChange={handleSelectChange("contentWidth")} title={'ШИРИНА КОНТЕНТА'}/>
 					</div>
 					<div className={styles.bottomContainer}>
-						<Button title='Сбросить' type='reset' onClick={buttonReset}/>
+						<Button title='Сбросить' type='reset' onClick={handleReset}/>
 						<Button title='Применить' type='submit' />
 					</div>
 				</form>

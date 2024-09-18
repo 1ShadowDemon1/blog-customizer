@@ -1,14 +1,14 @@
 import { useLayoutEffect, RefObject } from 'react';
 
-type useClosePopupT = {
+type UseClosePopupT = {
   
-  openPopup: boolean
+  isMenuOpen: boolean
   onClose: () => void
   objectRef: RefObject<HTMLElement>
 }
 
-export function useClosePopup({openPopup, onClose, objectRef}: useClosePopupT) {
-  if (!openPopup) {false}
+export function useClosePopup({isMenuOpen, onClose, objectRef}: UseClosePopupT) {
+  if (!isMenuOpen) {false}
 
   useLayoutEffect(() => {
 
@@ -24,11 +24,11 @@ export function useClosePopup({openPopup, onClose, objectRef}: useClosePopupT) {
     }
     
     document.addEventListener('keydown', escape)
-    //document.addEventListener('mousedown', clickWhithoutBlock)
+    document.addEventListener('mousedown', clickWhithoutBlock)
 
     return() => {
       document.removeEventListener('keydown', escape)
-      //document.removeEventListener('mousedown', clickWhithoutBlock)
+      document.removeEventListener('mousedown', clickWhithoutBlock)
     }
   })
 }
